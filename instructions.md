@@ -4,7 +4,7 @@
 
 Welcome to the MBTA Helper project! 
 
-You may have used multiple Python libraries to access information on the Internet. For example, `praw` can get Reddit data by interacting with Reddit's application programming interface (API). In this project, you will access web APIs directly and begin to write your own package/program to connect with new data sources. Then you will build a simple website containing some webpages with a small amount of dynamic content using the `Flask` web framework. This website will help people find a nearby MBTA station and other information by providing an address or point of interest. As part of the project, you are encouraged to use ChatGPT to explore APIs and Python libraries that have not been covered yet. 
+You may have used multiple Python libraries to access information on the Internet. For example, `praw` can get Reddit data by interacting with Reddit's application programming interface (API). In this project, you will access web APIs directly and begin to write your own package/program to connect with new data sources. Then you will build a simple website containing some webpages with a small amount of dynamic content using the `Flask` web framework. This website will help people find a nearby MBTA station and other information by providing an address or point of interest. As part of the project, you are encouraged to use ChatGPT to explore APIs and Python libraries that have not been covered in classes yet. 
 
 ### Skills Emphasized
 
@@ -27,8 +27,9 @@ The goal for Part 1 to deal with geographical data. You will write a tool that t
 
 ```python   
 import mbta_helper
+
 print(mbta_helper.find_stop_near("Boston Common"))
-# Output: Beacon St opp Walnut St
+# Beacon St opp Walnut St
 ```
 
 **Note**: It will be up to you to make this happen. If you feel confident in your ability and enjoy challenges, you can delete `mbta_helper.py` in the folder and implement it from scratch all by yourself! If you prefer more scaffolding, you can open and read code in `mbta_helper.py` as a starting point, while reading the following sections.
@@ -45,7 +46,7 @@ APIs allow you make requests using specifically constructed URLs and return data
 
     You will need to request a unique user key/access token to be sent with each request since web services generally limit the number of requests you can make. In order to get a key/token, you will need to agree to the API's terms, which restrict how you can use the service. If you are uncomfortable with any of the terms, please contact your professor.
 
-3. **Test your application and launch to users** (A.K.A. the fun part):
+3. **Test your application and launch to users:**
 
     The first API we will use is the [Mapbox](https://docs.mapbox.com/api/search/geocoding/), which allows you to specify a place name or address and receive its latitude and longitude. Take a few minutes to read the documentation (it's quite good). You need to sign up and get a free API Key [here](https://account.mapbox.com/). 
 
@@ -61,7 +62,7 @@ import urllib.request
 MAPBOX_BASE_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places"
 MAPBOX_TOKEN = 'YOUR MAPBOX API ACCESS TOKEN'
 query = 'Babson College'
-query = query.replace(' ', '%20') # In URL encoding, spaces are typically replaced with "%20"
+query = query.replace(' ', '%20') # In URL encoding, spaces are typically replaced with "%20". You can also use urllib.parse.quote function. 
 url=f'{MAPBOX_BASE_URL}/{query}.json?access_token={MAPBOX_TOKEN}&types=poi'
 print(url) # Try this URL in your browser first
 
@@ -75,7 +76,7 @@ We used the [`pprint` module](https://docs.python.org/3/library/pprint.html) to 
 
 ```python
 print(response_data['features'][0]['properties']['address'])
-# Output: 231 Forest St
+# 231 Forest St
 ```
 
 **What you need to do**: Write a function (maybe two) to extract the latitude and longitude from the JSON response.
@@ -84,7 +85,7 @@ print(response_data['features'][0]['properties']['address'])
 
 In the above example we passed a hard-coded URL to the `urlopen` function, but in your code you will need to generate the parameters based on user input. Check out [*Understanding URLs*](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_URL) and their structure for a helpful guide to URL components and encoding.
 
-You can build up the URL string manually via using f-string, but it's probably helpful to check out [`urlencode` function](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.urlencode) from `urllib.request`.
+You can build up the URL string manually via using f-string and `str.replace` function as in the example above, but it's probably helpful to check out [`urlencode`](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.urlencode) or [`parse`](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.quote) from `urllib.parse` module.
 
 **What you need to do**: Write a function that takes an address or place name as input and returns a properly encoded URL to make a Mapbox geocoding request.
 
@@ -109,7 +110,7 @@ Then click "Execute" button. You should be able to find a generated URL in Curl.
 
 **What you need to do**: Create a function that takes a latitude and longitude and returns two values: the name of the closest MBTA stop, whether it is wheelchair accessible.
 
-**Note**: Unfortunagely there are no MBTA stops close enough to Babson College - you have to get out into the city!
+**Note**: Unfortunagely there are no MBTA stops close enough (approximately a half mile) to Babson College - you have to get out into the city!
 
 ### 5. To Wrap-up
 
@@ -140,7 +141,7 @@ To achieve this, we will use `Flask` - a lightweight and powerful web framework 
 
 You need to first install `Flask`. Run the following command:
 
-```shell
+```bash
 > python -m pip install flask # on Windows
 # or 
 > python3 -m pip install flask # on macOS/Linux
@@ -188,7 +189,7 @@ It will be up to you to make this happen. If you feel confident in your ability 
 
 To complete this project, the official [Flask documentation](https://flask.palletsprojects.com/en/3.0.x/#user-s-guide) will get you pretty far.
 
-- **HTML Forms:**. To make forms in HTML, check out [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) and/or [*W3Schools*](https://www.w3schools.com/html/html_forms.asp). For even more information, check [*this*](https://letmegooglethat.com/?q=html%2Bforms) out.
+- **HTML Forms:**. To make forms in HTML, check out [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) and/or [*W3Schools*](https://www.w3schools.com/html/html_forms.asp). For even more information, check [*this*](https://letmegpt.com/?q=html%20forms) out.
 
 - **Sending `POST` Requests:** To send the data from the form in a `POST` request, use an input with type `submit`, and set the action of the form to reflect the destination in your routes.
 
@@ -198,7 +199,7 @@ To complete this project, the official [Flask documentation](https://flask.palle
 
 ### 6. Going Further (Optional)
 
-- **Want to keep track of some data in your web app?** Instead of using a `.txt` file or a `pickle` file, it's common practice in nearly any web app to use a **database**. A few especially well-known database choices are `MySQL`, `SQLite` (my go-to choice for a quick demo), or `PostgreSQL`, which all use SQL(Structured Query Language) to manipulate all stored data, as do many other common relational databases. Alternatively, you may use `MongoDb`, which stores data in an unstructured format similar to JSON. MongoDb is stupidly easy to set up and use, but I'd stop and think first before jumping right in. It may be the easy choice, but representing your data intelligently in a relational table can be much more effective and less of a headache later on.
+- **Want to keep track of some data in your web app?** Instead of using a `.txt` file or a `pickle` file, it's common practice in nearly any web app to use a **database**. A few especially well-known database choices are `MySQL`, `SQLite` (my go-to choice for a quick project/demo), or `PostgreSQL`, which all use SQL(Structured Query Language) to manipulate all stored data, as do many other common relational databases. Alternatively, you may use `MongoDb`, which stores data in an unstructured format similar to JSON. MongoDb is stupidly easy to set up and use, but I'd stop and think first before jumping right in. It may be the easy choice, but representing your data intelligently in a relational table can be much more effective and less of a headache later on.
   
 - **But HTML is so ugly!** HTML alone may not look visually appealing, which is why we use CSS (Cascading Style Sheets) to add some extra flair and style to our HTML. You can change pretty much anything about HTML - colors, shapes, sizes, placement, etc. - with CSS rules. It's also pretty simple to write. Check out resources such as [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps) and/or [W3Schools](https://www.w3schools.com/css/css_intro.asp) to learn more about CSS.
   
@@ -223,7 +224,7 @@ After completing the required parts of this project, you can spice it up by addi
 
 ---
 
-## Project Wrap-up
+## Project Wrap-Up
 
 ### 1. Getting Started
 
@@ -231,7 +232,7 @@ To begin the assignment, one team member should **fork** this base repository, t
 
 ### 2. Project Writeup and Reflection
 
-Write a summary of your project and your reflections on it in [`README.md`](README.md), using [Markdown format](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) (1 per team, not 1 per person).The [`README.md`](README.md) file should include the following sections:
+Write a summary of your project and your reflections on it in [`README.md`](README.md), using [Markdown format](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) (1 per team, not 1 per person). The [`README.md`](README.md) file should include the following sections:
 
 **1. Project Overview** (~1 paragraph)
 
@@ -258,4 +259,4 @@ After you finish the project, Please write a short document for reflection.
 3. Submit project's GitHub repository URL to Canvas. In the comment area on Canvas, specify names of all team members. **Note: Everyone in the team needs to submit on Canvas and add comment.**
 
 ---
-*updated: 11/04/2023*
+*updated: 3/26/2024*

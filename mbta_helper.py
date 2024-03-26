@@ -8,16 +8,17 @@ MBTA_BASE_URL = "https://api-v3.mbta.com/stops"
 
 
 # A little bit of scaffolding if you want to use it
+
 def get_json(url: str) -> dict:
     """
     Given a properly formatted URL for a JSON web API request, return a Python JSON object containing the response to that request.
 
-    Both get_lat_long() and get_nearest_station() might need to use this function.
+    Both get_lat_lng() and get_nearest_station() might need to use this function.
     """
     pass
 
 
-def get_lat_long(place_name: str) -> tuple[str, str]:
+def get_lat_lng(place_name: str) -> tuple[str, str]:
     """
     Given a place name or address, return a (latitude, longitude) tuple with the coordinates of the given place.
 
