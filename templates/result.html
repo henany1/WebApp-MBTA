@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MBTA Station Result</title>
+</head>
+<body>
+    <h1>Nearest MBTA Station</h1>
+    <p>Station Name: {{ station_name }}</p>
+    <p>Wheelchair Accessible: {{ 'Yes' if wheelchair_accessible else 'No' }}</p>
+    
+    {% if arrivals %}
+        <h2>Upcoming Arrivals:</h2>
+        <ul>
+            {% for arrival in arrivals %}
+                <li>Route {{ arrival.route_id }} arriving at {{ arrival.arrival_time }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No upcoming arrivals found.</p>
+    {% endif %}
+
+    {% if weather_info %}
+        <h2>Weather in the Area</h2>
+        <p>Temperature: {{ weather_info.main.temp }}°C</p>
+        <p>Weather: {{ weather_info.weather[0].description }}</p>
+    {% endif %}
+
+    <a href="/">Find another station</a>
+</body>
+</html>
